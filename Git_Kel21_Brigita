@@ -1,0 +1,85 @@
+
+def pakan_harian(bobot, jenis_makanan, is_sakit):
+    if jenis_makanan == 1:    
+        porsi = bobot * 0.05
+    elif jenis_makanan == 2:
+        porsi = bobot * 0.02
+    elif jenis_makanan == 3:  
+        porsi = bobot * 0.03
+    else:
+        return None
+
+    if is_sakit:
+        porsi += porsi * 0.15
+    return porsi
+
+def biaya_kebersihan():
+    return 50000.0 
+
+class TemcyZoo:
+    def detail_pakan(self, jenis_makanan, bobot, porsi, is_sakit):
+        match jenis_makanan:
+            case 1:
+                jenis = "Karnivora"
+            case 2:
+                jenis = "Herbivora"
+            case 3:
+                jenis = "Omnivora"
+            case        _:
+                jenis = "Tidak Valid"
+
+        print("\n======== HASIL PERHITUNGAN PAKAN =======")
+        print(f"Jenis Hewan : {jenis}")
+        print(f"Bobot Hewan : {bobot} kg")
+        print(f"Status Sakit: {'Ya' if is_sakit else 'Tidak'}")
+        print(f"Total Pakan : {porsi} kg/hari")
+
+    def judul(self):
+        print("\n============= KELOMPOK 21 ==============")
+        print("=== SISTEM MANAJEMEN PAKAN TEMCY ZOO ===")
+
+zoo = TemcyZoo()
+is_running = True
+
+while is_running:
+    zoo.judul()
+    print("1. Hitung Pakan Satwa")
+    print("2. Lihat Biaya Kebersihan Kandang")
+    print("3. Keluar Program")
+    
+    pilihan_menu = input("\nPilih menu (1-3): ")
+    if pilihan_menu not in ["1", "2", "3"]:
+        print("ERROR!! Pilihan menu tidak valid!")
+        continue
+
+    if pilihan_menu == "1":
+        print("\nPilih Jenis Hewan:")
+        print("1. Karnivora")
+        print("2. Herbivora")
+        print("3. Omnivora")
+        
+        jenis_hewan = int(input("Masukkan jenis hewan (1/2/3): "))
+        if jenis_hewan not in [1, 2, 3]:
+            print("ERROR!! Jenis hewan tidak valid!")
+            continue
+        bobot = float(input("Masukkan bobot hewan (kg): "))
+        status = input("Apakah hewan sedang sakit? (ya/tidak): ").lower()
+
+        is_sakit = status in ["ya", "y", "YA", "Ya", "Y", "Iya", "iya"]
+
+        porsi_total = pakan_harian(bobot, jenis_hewan, is_sakit)
+
+        if porsi_total is not None:
+            zoo.detail_pakan(jenis_hewan, bobot, porsi_total, is_sakit)
+        else:
+            print("ERROR!! Jenis hewan tidak valid!")
+
+    elif pilihan_menu == "2":
+        biaya = biaya_kebersihan()
+        print(f"\nBiaya standar kebersihan per kandang: Rp {biaya}")
+
+    elif pilihan_menu == "3":
+        print("\nTerima kasih! Program Temcy Zoo selesai.")
+        is_running = False
+    else:
+        print("ERROR!! Pilihan menu tidak valid. Silakan coba lagi.")
